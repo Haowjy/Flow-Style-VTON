@@ -200,7 +200,7 @@ def load_checkpoint_part_parallel(model, checkpoint_path):
 def load_checkpoint(model, checkpoint_path):
 
     if not os.path.exists(checkpoint_path):
-        print('No checkpoint!')
+        print(f"No checkpoint at {checkpoint_path}!")
         return
 
     checkpoint = torch.load(checkpoint_path)
