@@ -1,7 +1,3 @@
-#
-# MODIFIED TO PRINT THE WARP IMAGE AS WELL
-# UNCOMENTS WHAT THEY DO
-#
 import time
 from options.test_options import TestOptions
 from data.data_loader_test import CreateDataLoader
@@ -49,7 +45,7 @@ dataset_size = len(data_loader)
 print(dataset_size)
 #import ipdb; ipdb.set_trace()
 warp_model = AFWM(opt, 3)
-# print(warp_model) # don't print warp model
+# print(warp_model) # don't print model
 warp_model.eval()
 warp_model.cuda()
 load_checkpoint(warp_model, opt.warp_checkpoint)
@@ -94,20 +90,15 @@ for epoch in range(1,2):
         m_composite = m_composite * warped_edge
         p_tryon = warped_cloth * m_composite + p_rendered * (1 - m_composite)
 
-        path = 'results/' + opt.name
-        os.makedirs(path, exist_ok=True)
+        # path = 'results/' + opt.name
+        # os.makedirs(path, exist_ok=True)
         #sub_path = path + '/PFAFN'
         #os.makedirs(sub_path,exist_ok=True)
-        os.makedirs(path + '/im_gar_flow_wg',exist_ok=True) # added
         print(data['p_name'])
 
         if step % 1 == 0:
             
-            #
-            # CHANGED
-            #
-            
-            # ## save try-on image only
+            ## save try-on image only
 
             # utils.save_image(
             #     p_tryon,
@@ -126,18 +117,16 @@ for epoch in range(1,2):
             c= warped_cloth.cuda()
             d = p_tryon
             combine = torch.cat([a[0],b[0], flow_color, c[0], d[0]], 2).squeeze()
+            os.makedirs('./results/im_gar_flow_wg',exist_ok=True)
             utils.save_image(
                combine,
-               os.path.join(path, data['p_name'][0]),
+               os.path.join('./results/im_gar_flow_wg', data['p_name'][0]),
                nrow=int(1),
                normalize=True,
                range=(-1,1),
             )
             
-            #
-            # UNCOMMENTED
-            #
-            
+
         step += 1
         if epoch_iter >= dataset_size:
             break
