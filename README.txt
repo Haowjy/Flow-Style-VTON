@@ -122,3 +122,5 @@ see [Flow-Style-VTON](https://github.com/SenHe/Flow-Style-VTON) for more details
   year={2022}
 }
 ```
+
+and [PyTorch Neural Style Transfer Tutorial](https://pytorch.org/tutorials/advanced/neural_style_tutorial.html) about the implementation of Neural Style Transfer
