@@ -265,10 +265,12 @@ def style_transfer_with_mask(style_img, content_img, content_mask=None, content_
     """
     if content_mask is not None:
         input_img = (style_img*(1-content_mask)+content_img).clone()
+        content_img2 = input_img.clone()
     else:
         input_img = content_img.clone()
+        content_img2 = content_img.clone()
 
-    styled_output = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std, content_img, style_img, input_img, style_weight=style_weight, content_weight=content_weight, content_mask=content_mask)
+    styled_output = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std, content_img2, style_img, input_img, style_weight=style_weight, content_weight=content_weight, content_mask=content_mask)
         
     gc.collect()
     torch.cuda.empty_cache()
